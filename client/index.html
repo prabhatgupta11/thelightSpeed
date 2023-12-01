@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav img {
+            float: left;
+            margin: 10px;
+        }
+
+        nav form {
+            float: right;
+            margin: 10px;
+        }
+
+        nav input[type="text"], nav input[type="password"] {
+            padding: 5px;
+            margin-right: 5px;
+        }
+
+        nav input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        nav input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        
+        <form>
+            <input id="email" type="text" placeholder="email">
+            <input id="pass" type="password" placeholder="Password">
+            <input id="btn" type="submit" value="Login">
+        </form>
+    </nav>
+
+    <!-- Your content goes here -->
+    <script>
+        document.getElementById("btn").addEventListener("click", (e) => {
+            e.preventDefault();
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("pass").value;
+            let obj = {
+                email,
+                password
+            };
+
+            fetch("http://localhost:4500/api/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(obj)
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                if(data.message="Logged in successfully")
+                {
+                    console.log("working")
+                    window.location.href = "./admin.html";
+                }
+          
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+        });
+    </script>
+</body>
+
+</html>
+
